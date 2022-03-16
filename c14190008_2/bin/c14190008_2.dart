@@ -6,7 +6,9 @@ import 'cd.dart';
 
 void main(List<String> arguments) {
   List Item = new List.empty(growable: true);
-  List Item_Ditempatlain;
+  List Item_Ditempatlain = new List.empty();
+  int nomor_id_2 = 1;
+  int counter_Item2 = 0;
   // Item.add(Benda(01, "Hai", "Mengapa?", 30000));
   // Item.add(BukuBiasa(02, "halo", "Kenapa", 30000, 40000, "Pak GG"));
   // Item.add(
@@ -50,7 +52,8 @@ void main(List<String> arguments) {
         int? ISBN = int.parse(coba_input!); //ISBN
         stdout.write("\nPenulis : ");
         String? Penulis = stdin.readLineSync(); // Penulis
-        Item.add(BukuBiasa(nomor_id_1, Nama, Judul, Harga, ISBN, Penulis));
+        Item.add(BukuBiasa(
+            nomor_id_1, Nama, Judul, Harga, "Buku Biasa", ISBN, Penulis));
         print(Item[counter_Item].Display());
         counter_Item++;
         nomor_id_1++;
@@ -77,8 +80,8 @@ void main(List<String> arguments) {
         //Buku Travel Guide
         stdout.write("\nNegara : ");
         String? Negara = stdin.readLineSync(); // Negara
-        Item.add(
-            TravelGuide(nomor_id_1, Nama, Judul, Harga, ISBN, Penulis, Negara));
+        Item.add(TravelGuide(nomor_id_1, Nama, Judul, Harga,
+            "Buku Travel Guide", ISBN, Penulis, Negara));
         print(Item[counter_Item].Display());
         counter_Item++;
         nomor_id_1++;
@@ -98,7 +101,7 @@ void main(List<String> arguments) {
         int? Harga = int.parse(coba_input!); //Harga
         stdout.write("\nArtist : ");
         String? Artist = stdin.readLineSync(); // Artist
-        Item.add(CD(nomor_id_1, Nama, Judul, Harga, Artist));
+        Item.add(CD(nomor_id_1, Nama, Judul, Harga, "CD", Artist));
         print(Item[counter_Item].Display());
         counter_Item++;
         nomor_id_1++;
@@ -106,21 +109,46 @@ void main(List<String> arguments) {
         break;
       }
     } else if (menu == 2) {
+      if (Item.length >= 1) {
+        for (int a = 0; a < counter_Item; a++) {
+          print(' ID - ${a + 1}, Nama : ${Item[a].nama}');
+        }
+        stdout.write("Menampilkan Sebuah Barang, ID ke - ");
+        coba_input = stdin.readLineSync();
+        int? IDke = int.parse(coba_input!);
+        IDke--;
+        bool x = false;
+        if (Item.length >= 0 && IDke >= 0) {
+          for (int a = 0; a < counter_Item; a++) {
+            if (a == IDke) {
+              Item[a].Display();
+              x = true;
+            }
+          }
+        }
+        if (!x) {
+          stdout.write("ID tidak ditemukan\n");
+        }
+      } else {
+        stdout.write("Data Kosong di Lokasi Utama\n");
+      }
     } else if (menu == 3) {
+      stdout.write("Barang yang ingin dipindah ke Lokasi Tertentu");
     } else if (menu == 4) {
       stdout.write("Print Semua Data di Lokasi Item Ke - : \n1.Utama\n");
       coba_input = stdin.readLineSync();
       int? LokasiKe = int.parse(coba_input!); //LokasiKe
       if (LokasiKe == 1) {
-        if (Item.length != 0) {
+        if (Item.length >= 1) {
           for (int a = 0; a < counter_Item; a++) {
             Item[a].Display();
           }
         } else {
           stdout.write("Data Kosong di Lokasi Item Ke - $LokasiKe");
+          stdout.write("\n");
         }
       } else {
-        stdout.write("Tidak Ada Lokasi yang sesuai");
+        stdout.write("Tidak Ada Lokasi yang sesuai\n");
       }
     }
   } while (menu != 0);
