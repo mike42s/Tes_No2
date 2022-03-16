@@ -222,15 +222,27 @@ void main(List<String> arguments) {
         }
       }
     } else if (menu == 6) {
-      String? input;
-      String? G;
+      String input;
+      String G;
       stdout.write(
           "Title yang ingin dicari : "); //Asumsi Search data menggunakan judul dengan menggunakan 1 huruf saja dan yang sama
-      input = stdin.readLineSync();
-
+      input = stdin.readLineSync()!;
+      //print(input.length);
+      int k = 0;
       for (int i = 0; i < Item.length; i++) {
-        if (input! == Item[i].nama[0]) {
-          print('${Item[i].Display()}');
+        k = 0;
+        G = Item[i].judul;
+        int a = G.length;
+        //print('$a - $G');
+        for (int j = 0; j < a; j++) {
+          if (input == Item[i].judul[j]) {
+            // print('${Item[i].Display()}');
+            k++;
+          }
+        }
+        if (k - 1 <= input.length) {
+          stdout.write('$G');
+          stdout.write('\n');
         }
       }
       // final asss = <int>{};
