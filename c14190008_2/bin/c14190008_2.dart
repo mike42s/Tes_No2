@@ -24,7 +24,7 @@ void main(List<String> arguments) {
   int counter_Item = 0;
   do {
     stdout.write(
-        "1.Menambahkan Barang\n2.Menampilkan Barang\n3.Meletakkan Barang pada lokasi tertentu\n4.Menampilkan seluruh barang pada lokasi tertentu\n0.Exit\n");
+        "1.Menambahkan Barang\n2.Menampilkan Barang\n3.Meletakkan Barang pada lokasi tertentu\n4.Menampilkan seluruh barang pada lokasi tertentu\n5. Fungsi Tambahan 1\n6. Fungsi Tambahan 2\n0.Exit\n");
     coba_input = stdin.readLineSync();
     menu = int.parse(coba_input!);
     if (menu == 1) {
@@ -133,15 +133,66 @@ void main(List<String> arguments) {
         stdout.write("Data Kosong di Lokasi Utama\n");
       }
     } else if (menu == 3) {
-      stdout.write("Barang yang ingin dipindah ke Lokasi Tertentu");
+      stdout.write("Barang yang ingin dipindah ke Lokasi Tertentu\n");
+      for (int a = 0; a < counter_Item; a++) {
+        print(' ID - ${a + 1}, Nama : ${Item[a].nama}');
+      }
+      coba_input = stdin.readLineSync();
+      int? LokasiKe = int.parse(coba_input!); //LokasiKe
+      LokasiKe--;
+      stdout.write(
+          "Lokasi yang baru : \n1.Halaman Belakang\n2.Halaman Tengah\n3.Utama\n");
+      coba_input = stdin.readLineSync();
+      int? go = int.parse(coba_input!); //LokasiKe
+      String? pilihan;
+      if (go == 1) {
+        pilihan = "Halaman Belakang";
+      } else if (go == 2) {
+        pilihan = "Halaman Tengah";
+      } else if (go == 3) {
+        pilihan = "Utama";
+      }
+
+      Item[LokasiKe].PindahLokasi(pilihan);
+      print('Lokasi = ${Item[LokasiKe].DisplayInr()}');
     } else if (menu == 4) {
-      stdout.write("Print Semua Data di Lokasi Item Ke - : \n1.Utama\n");
+      stdout.write(
+          "Print Semua Data di Lokasi Item Ke - : \n1.Utama\n2.Halaman Tengah \n3.Halaman Belakang\n");
+
+      //print(Item[0].Lokasi);
       coba_input = stdin.readLineSync();
       int? LokasiKe = int.parse(coba_input!); //LokasiKe
       if (LokasiKe == 1) {
         if (Item.length >= 1) {
           for (int a = 0; a < counter_Item; a++) {
-            Item[a].Display();
+            String? j = Item[a].Lokasi;
+            if (j == "Utama") {
+              Item[a].Display();
+            }
+          }
+        } else {
+          stdout.write("Data Kosong di Lokasi Item Ke - $LokasiKe");
+          stdout.write("\n");
+        }
+      } else if (LokasiKe == 2) {
+        if (Item.length >= 1) {
+          for (int a = 0; a < counter_Item; a++) {
+            String? j = Item[a].Lokasi;
+            if (j == "Halaman Tengah") {
+              Item[a].Display();
+            }
+          }
+        } else {
+          stdout.write("Data Kosong di Lokasi Item Ke - $LokasiKe");
+          stdout.write("\n");
+        }
+      } else if (LokasiKe == 3) {
+        if (Item.length >= 1) {
+          for (int a = 0; a < counter_Item; a++) {
+            String? j = Item[a].Lokasi;
+            if (j == "Halaman Belakang") {
+              Item[a].Display();
+            }
           }
         } else {
           stdout.write("Data Kosong di Lokasi Item Ke - $LokasiKe");
@@ -150,6 +201,51 @@ void main(List<String> arguments) {
       } else {
         stdout.write("Tidak Ada Lokasi yang sesuai\n");
       }
+    } else if (menu == 5) {
+      stdout.write("N Data Barang Pertama : ");
+      coba_input = stdin.readLineSync();
+      int a = int.parse(coba_input!);
+      stdout.write("Batasan Harga (Bawah) : ");
+      coba_input = stdin.readLineSync();
+      int b = int.parse(coba_input!);
+      stdout.write("Batasan Harga (Atas) : ");
+      coba_input = stdin.readLineSync();
+      int c = int.parse(coba_input!);
+      for (int i = 0; i < Item.length; i++) {
+        //print('${Item[i].harga}');
+        if (a > i && b < Item[i].harga && Item[i].harga < c) {
+          print(
+              "$a data barang pertama yang memiliki kisaran harga antara $b sampai dengan $c");
+          stdout.write("\n");
+          stdout.write("${Item[i].Display()}");
+          stdout.write("\n");
+        }
+      }
+    } else if (menu == 6) {
+      String? input;
+      String? G;
+      stdout.write(
+          "Title yang ingin dicari : "); //Asumsi Search data menggunakan judul dengan menggunakan 1 huruf saja dan yang sama
+      input = stdin.readLineSync();
+
+      for (int i = 0; i < Item.length; i++) {
+        if (input! == Item[i].nama[0]) {
+          print('${Item[i].Display()}');
+        }
+      }
+      // final asss = <int>{};
+      // for (int a = 0; a < input!.length; a++) {
+      //   G = input[a];
+      //   for (int j = 0; j < Item[a].nama.length; j++) {
+      //     if (G == Item[a].nama[j] && asss.last != a) {
+      //       asss.add(a);
+      //     }
+      //   }
+      // }
+      // for (int i = 0; i < asss.length; i++) {
+      //   int k = asss.elementAt(i);
+      //   print('i. ${Item[k].Display()}');
+      // }
     }
   } while (menu != 0);
 }
